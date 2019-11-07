@@ -12,8 +12,10 @@ const tours = JSON.parse(
 );
 
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: 'success',
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       tours
@@ -122,6 +124,17 @@ const deleteTour = (req, res) => {
 //app.delete('/api/v1/tours/:id', deleteTour);
 
 // use routes
+
+//using our own middleware
+app.use((req, res, next) => {
+  console.log('hello from the middleware!');
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 app
   .route('/api/v1/tours')
