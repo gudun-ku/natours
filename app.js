@@ -1,10 +1,28 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
-//asking for using middleware
+// MIDDLEWARES
+
+app.use(morgan('dev'));
+
 app.use(express.json());
+
+//using our own middleware
+app.use((req, res, next) => {
+  console.log('hello from the middleware!');
+  next();
+});
+
+//using our own middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+// ROUTE HANDLERS
 
 // read the data file outside of the event loop
 const tours = JSON.parse(
@@ -112,29 +130,7 @@ const deleteTour = (req, res) => {
   });
 };
 
-// get all tours
-//app.get('/api/v1/tours', getAllTours);
-// create a tour
-//app.post('/api/v1/tours', createTour);
-// get only one tour
-//app.get('/api/v1/tours/:id', getTour);
-// update a tour
-//app.patch('/api/v1/tours/:id', updateTour);
-// delete tour
-//app.delete('/api/v1/tours/:id', deleteTour);
-
-// use routes
-
-//using our own middleware
-app.use((req, res, next) => {
-  console.log('hello from the middleware!');
-  next();
-});
-
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
+// ROUTES
 
 app
   .route('/api/v1/tours')
@@ -146,6 +142,8 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+// START SERVER
 
 const port = 3000;
 app.listen(port, () => {
