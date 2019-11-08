@@ -164,28 +164,38 @@ const deleteUser = (req, res) => {
     message: 'This route is not defined yet!'
   });
 };
+
 // ROUTES
 
-app
-  .route('/api/v1/tours')
+// Routers middleware
+const tourRouter = express.Router();
+const userRouter = express.Router();
+
+// Routers mounting
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+
+// Routes
+tourRouter
+  .route('/')
   .get(getAllTours)
   .post(createTour);
 
-app
-  .route('/api/v1/tours/:id')
+tourRouter
+  .route('/:id')
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
 
 // USERS ROUTES
 
-app
-  .route('/api/v1/users')
+userRouter
+  .route('/')
   .get(getAllUsers)
   .post(createUser);
 
-app
-  .route('/api/v1/users/:id')
+userRouter
+  .route('/:id')
   .get(getUser)
   .patch(updateUser)
   .delete(deleteUser);
