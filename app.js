@@ -1,12 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const app = express();
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
+const app = express();
+
 // MIDDLEWARES
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  console.log('using morgan for logging!');
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 
 // STATIC FILES
