@@ -6,7 +6,7 @@ const Tour = require('./../models/tourModel');
 // );
 
 exports.checkID = (req, res, next, val) => {
-  // small nice trick
+  //small nice trick
   // const id = val * 1;
   // if (id > tours.length) {
   //   return res.status(404).json({
@@ -58,7 +58,29 @@ exports.getTour = (req, res) => {
   // });
 };
 
-exports.createTour = (req, res) => {
+exports.createTour = async (req, res) => {
+  try {
+    const newTour = await Tour.create({});
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
+  }
+
+  // res.status(201).json({
+  //         status: 'success',
+  //         // data: {
+  //         //   tour: newTour
+  //         // }
+  //       });
   //use middleware to put body in express request
   //console.log(req.body);
   // const newId = tours[tours.length - 1].id + 1;
