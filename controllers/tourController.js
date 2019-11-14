@@ -1,29 +1,5 @@
 const Tour = require('./../models/tourModel');
 
-// read the data file outside of the event loop
-// const tours = JSON.parse(
-//   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-// );
-
-exports.checkID = (req, res, next, val) => {
-  //small nice trick
-  // const id = val * 1;
-  // if (id > tours.length) {
-  //   return res.status(404).json({
-  //     status: 'fail',
-  //     message: 'Invalid ID'
-  //   });
-  // }
-  // const tour = tours.find(el => el.id === id);
-  // if (!tour) {
-  //   return res.status(404).json({
-  //     status: 'fail',
-  //     message: 'Invalid ID'
-  //   });
-  // }
-  // next();
-};
-
 exports.checkBody = (req, res, next) => {
   if (!req.body.name || !req.body.price) {
     return res.status(400).json({
@@ -37,7 +13,23 @@ exports.checkBody = (req, res, next) => {
 // ROUTE HANDLERS
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // BUILD THE QUERY
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach(el => delete queryObj[el]);
+    console.log(req.query, queryObj);
+
+    const query = Tour.find(queryObj);
+
+    // const tours =  Tour.find()
+    //   .where('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy');
+
+    // EXECUTE QUERY
+    const tours = await query;
+
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,

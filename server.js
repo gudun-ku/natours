@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const tourModel = require('./models/tourModel');
 const dotenv = require('dotenv');
 
 // ENVIRONMENT VARIABLES
