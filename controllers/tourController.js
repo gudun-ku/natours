@@ -14,18 +14,47 @@ exports.checkBody = (req, res, next) => {
 exports.getAllTours = async (req, res) => {
   try {
     // BUILD THE QUERY
+    // 1A) Filtering
     const queryObj = { ...req.query };
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach(el => delete queryObj[el]);
-    console.log(req.query, queryObj);
+    //console.log(req.query, queryObj);
 
-    const query = Tour.find(queryObj);
+    // 1B) Advanced filtering
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
 
+    //gt, gte, lt, lte
+    // console.log(JSON.parse(queryStr));
+
+    // { difficulty: easy, duration: { $gte: 5}}
+    // { duration: { gte: '5' }, difficulty: 'easy' }
+
+    // full path example:
     // const tours =  Tour.find()
     //   .where('duration')
     //   .equals(5)
     //   .where('difficulty')
     //   .equals('easy');
+
+    let query = Tour.find(JSON.parse(queryStr));
+
+    // 2) Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      //default sorting
+      query = query.sort('-createdAt');
+    }
+
+    // 3) Field limiting
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
 
     // EXECUTE QUERY
     const tours = await query;
