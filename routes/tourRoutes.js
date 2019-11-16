@@ -6,6 +6,11 @@ const router = express.Router();
 // Route middleware params
 // router.param('id', tourController.checkID);
 
+// Add routes for aliasing -use middleware
+router
+  .route('/top-5-cheap')
+  .get(tourController.aliasTopTours, tourController.getAllTours);
+
 // Routes
 router
   .route('/')
