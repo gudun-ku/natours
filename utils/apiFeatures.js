@@ -41,11 +41,6 @@ class APIFeatures {
 
   paginate() {
     //4) pagination
-    // const page = req.query.page * 1 || 1; //convert to a number or 1
-    // const limit = req.query.limit * 1 || 100;
-    // const skip = (page - 1) * limit;
-    // // page=3&limit=10
-    // query = query.skip(skip).limit(limit);
     if (this.queryString.page) {
       const page = this.queryString.page * 1 || 1; //convert to a number or 1
       const limit = this.queryString.limit * 1 || 100;
