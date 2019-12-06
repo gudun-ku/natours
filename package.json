@@ -4,8 +4,9 @@
   "description": "Learning node, express and MongoDB",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
-    "start:prod": "SETNODE_ENV=production& nodemon server.js"
+    "start": "nodemon server.js",
+    "start:prod": "SETNODE_ENV=production& nodemon server.js",
+    "debug": "ndb server.js"
   },
   "keywords": [
     "nature",
