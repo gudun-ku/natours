@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail]
   },
   photo: String,
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user'
+  },
   password: {
     type: String,
     required: [true, 'Provide a password'],
@@ -39,7 +44,10 @@ const userSchema = new mongoose.Schema({
     },
     select: false
   },
-  passwordChangedAt: Date
+  passwordChangedAt: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 // model is the best place for password encryption ?!
