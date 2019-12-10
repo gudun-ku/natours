@@ -119,10 +119,16 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('There is no user with that email.', 404));
   }
+
   // 2) Generate random reset token
   const resetToken = user.createPasswordResetToken();
-  await user.save({ validateBeforeSave: false });
+  await user.save();
+
+  next();
 
   // 3) Send the email with token to user
 });
-exports.resetPassword = (req, res, next) => {};
+
+exports.resetPassword = (req, res, next) => {
+  next();
+};
