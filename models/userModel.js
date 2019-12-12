@@ -65,6 +65,14 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
 });
 
+// right before new document's save - changing password date
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 // instance method for password checking
 userSchema.methods.correctPassword = async function(
   candidatePassword,
