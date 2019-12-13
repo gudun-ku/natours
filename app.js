@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+// query rate limiting for login and signup
+const rateLimit = require('express-rate-limit');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -10,9 +12,17 @@ const app = express();
 
 // MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
-  console.log('using morgan for logging!');
   app.use(morgan('dev'));
 }
+
+// per HOUR!
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour'
+});
+
+app.use('/api', limiter);
 
 app.use(express.json());
 

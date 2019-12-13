@@ -73,6 +73,13 @@ userSchema.pre('save', function(next) {
   next();
 });
 
+// select only active users middleware
+userSchema.pre(/^find/, function(next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 // instance method for password checking
 userSchema.methods.correctPassword = async function(
   candidatePassword,
@@ -104,7 +111,7 @@ userSchema.methods.createPasswordResetToken = function() {
     .update(resetToken)
     .digest('hex');
 
-  console.log({ resetToken }, this.passwordResetToken);
+  //console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // ten minutes
 
