@@ -42,6 +42,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getTour = catchAsync(async (req, res, next) => {
+  // we're populating guides
   const tour = await Tour.findById(req.params.id);
   //Tour.findOne({_id: req.params.id });
 

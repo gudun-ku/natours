@@ -23,8 +23,8 @@ router
 
 router
   .route('/:id')
-  .get(tourController.getTour)
-  .patch(tourController.updateTour)
+  .get(authController.protect, tourController.getTour)
+  .patch(authController.protect, tourController.updateTour)
   .delete(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
