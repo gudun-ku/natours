@@ -43,9 +43,18 @@ app.use(mongoSanitize());
 // Data sanitization against XSS attack
 app.use(xss());
 // Prevent http query parameters pollution
-app.use(hpp({
-  whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price']
-}));
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+);
 
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
