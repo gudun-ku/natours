@@ -3,6 +3,9 @@ const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
+//using handler factory
+const factory = require('./handlerFactory');
+
 // ROUTE HANDLERS
 exports.getAllReviews = catchAsync(async (req, res, next) => {
   // EXECUTE QUERY
@@ -53,3 +56,5 @@ exports.getReview = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+exports.deleteReview = factory.deleteOne(Review);
