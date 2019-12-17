@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-//const User = require('./userModel');
 //const validator = require('validator');
 
 // TOUR SCHEMA (MODEL)
@@ -114,6 +113,13 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// Virtual populate tour reviews
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
+});
+
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
@@ -158,7 +164,7 @@ tourSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt'
-  });
+  }).populate({ path: 'reviews', select: '-__v' });
   next();
 });
 

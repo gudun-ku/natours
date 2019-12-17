@@ -6,11 +6,7 @@ const catchAsync = require('./../utils/catchAsync');
 // ROUTE HANDLERS
 exports.getAllReviews = catchAsync(async (req, res, next) => {
   // EXECUTE QUERY
-  const features = new APIFeatures(Review.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+  const features = new APIFeatures(Review.find(), req.query);
 
   const reviews = await features.query;
 
