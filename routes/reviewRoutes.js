@@ -2,7 +2,8 @@ const express = require('express');
 const reviewController = require('../controllers/reviewController');
 const authController = require('../controllers/authController');
 
-const router = express.Router();
+// MERGE PARAMS WITH OTHER ROUTERS TO PROVIDE NESTED ROUTES
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')

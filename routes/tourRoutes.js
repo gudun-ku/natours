@@ -2,10 +2,20 @@ const express = require('express');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
 
+const reviewRouter = require('./reviewRoutes');
+
 const router = express.Router();
 
 // Route middleware params
 // router.param('id', tourController.checkID);
+
+// REVIEWS
+
+// POST /tour/34324a/reviews
+// GET  /tour/34324a/reviews
+// GET  /tour/34324a/reviews/0498750a
+
+router.use('/:tourId/reviews', reviewRouter);
 
 // Add routes for aliasing -use middleware
 router
