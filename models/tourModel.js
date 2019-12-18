@@ -113,6 +113,11 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// Indexing schema
+//tourSchema.index({ price: 1 });
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 // Virtual populate tour reviews
 tourSchema.virtual('reviews', {
   ref: 'Review',
