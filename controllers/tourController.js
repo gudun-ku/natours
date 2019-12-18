@@ -1,5 +1,4 @@
 const Tour = require('./../models/tourModel');
-const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 
 //using handler factory
