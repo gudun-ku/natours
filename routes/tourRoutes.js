@@ -31,6 +31,13 @@ router
     tourController.getMonthlyPlan
   );
 
+// Geo
+router
+  .route('/tours-within/:distance/center/:latlng/:unit')
+  .get(tourController.getToursWithin);
+// /tours-distance?distance=233&center=40,45&unit=mi
+// /tours-within/233/center/-40,45/mi
+
 // Routes
 router
   .route('/')
