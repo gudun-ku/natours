@@ -17,6 +17,9 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 
+// view (our wwwsite) routes
+const viewRouter = require('./routes/viewRoutes');
+
 const app = express();
 
 // use PUG
@@ -72,15 +75,8 @@ app.use((req, res, next) => {
 });
 
 // ROUTES MOUNTING
-
-// PUG ROUTES
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    tour: 'The forest hiker',
-    user: 'Jonas'
-  });
-});
-
+// WWW ROUTES
+app.use('/', viewRouter);
 // API ROUTES
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
