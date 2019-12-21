@@ -15,9 +15,19 @@ exports.getOvierview = catchAsync(async (req, res) => {
   });
 });
 
-exports.getTour = (req, res) => {
+exports.getTour = catchAsync(async (req, res) => {
+  // 1) Get the data for the requested tour, include reviews and guides
+  const tour = await Tour.findOne({ slug: req.params.slug })
+    .populate('reviews', {
+      path: 'reviews',
+      fields: 'review rating user'
+    });
+  console.log(tour.name);
+  // 2) Build a template
+  // 3) Render that template with data
   res.status(200).render('tour', {
-    title: 'The Forest Hiker Tour'
+    title: tour.name,
+    tour
   });
-};
+});
 
