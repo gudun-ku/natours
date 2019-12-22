@@ -1,5 +1,6 @@
 //console.log('Hello from the client side :D');
+/* eslint-disable */
 
-const elLocations = document.getElementById('map');
-const locations = JSON.parse(elLocations.dataset.locations);
-//console.log(locations);
+export const displayMap = locations => {
+  return false;
+};
