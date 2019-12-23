@@ -1,6 +1,6 @@
 const catchAsync = require('./../utils/catchAsync');
 const Tour = require('./../models/tourModel');
-
+const AppError = require('./../utils/appError');
 
 exports.getOvierview = catchAsync(async (req, res) => {
   // 1) Get Tour data from collection
@@ -17,12 +17,18 @@ exports.getOvierview = catchAsync(async (req, res) => {
 
 exports.getTour = catchAsync(async (req, res, next) => {
   // 1) Get the data for the requested tour, include reviews and guides
-  const tour = await Tour.findOne({ slug: req.params.slug })
-    .populate('reviews', {
+  const tour = await Tour.findOne({ slug: req.params.slug }).populate(
+    'reviews',
+    {
       path: 'reviews',
       fields: 'review rating user'
-    });
-  console.log(tour.name);
+    }
+  );
+
+  if (!tour) {
+    return next(new AppError('There is no tour with that name', 404));
+  }
+
   // 2) Build a template
   // 3) Render that template with data
   res.status(200).render('tour', {
@@ -34,6 +40,5 @@ exports.getTour = catchAsync(async (req, res, next) => {
 exports.getLoginForm = catchAsync(async (req, res, next) => {
   res.status(200).render('login', {
     title: 'Log into your account'
-  })
+  });
 });
-
