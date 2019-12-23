@@ -10,7 +10,7 @@ const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutButton = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
-const userPasswordForm = docuemnt.querySelector('.form-user-password');
+const userPasswordForm = document.querySelector('.form-user-password');
 
 // DELEGATION
 if (mapBox) {
@@ -33,22 +33,31 @@ if (logoutButton) {
 }
 
 if (userDataForm) {
-  userDataForm.addEventListener('submit', e => {
+  userDataForm.addEventListener('submit', async e => {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    updateSettings({ name, email }, (type = 'data'));
+    await updateSettings({ name, email }, (type = 'data'));
   });
 }
 
 if (userPasswordForm) {
-  userDataForm.addEventListener('submit', e => {
+  userDataForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const passwordCurrent = password.getElementById('password-current').value;
-    const password = password.getElementById('password').value;
-    const passwordConfirm = password.getElementById('password-confirm').value;
+    document.querySelector('.btn--save-password').text = 'Updating...';
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
 
     //const email = document.getElementById('email').value;
-    updateSettings({ passwordCurrent, password, passwordConfirm }, 'password');
+    await updateSettings(
+      { passwordCurrent, password, passwordConfirm },
+      (type = 'password')
+    );
+
+    document.querySelector('.btn--save-password').text = 'Save password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
   });
 }
