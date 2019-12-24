@@ -10,20 +10,19 @@ export const updateSettings = async (data, type) => {
         ? 'http://localhost:8000/api/v1/users/updateMyPassword'
         : 'http://localhost:8000/api/v1/users/updateMe';
 
+    //console.log(url);
+
     const res = await axios({
       method: 'PATCH',
       url,
-      data: {
-        name,
-        email
-      }
+      data
     });
 
     if (res.data.status === 'success') {
       showAlert('success', `${type.toUpperCase()} updated succesfully!`);
-      window.setTimeout(() => {
-        location.assign('/');
-      }, 500);
+      //   window.setTimeout(() => {
+      //     location.assign('/');
+      //   }, 500);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

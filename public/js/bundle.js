@@ -8503,25 +8503,22 @@ function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            url = type === 'password' ? 'http://localhost:8000/api/v1/users/updateMyPassword' : 'http://localhost:8000/api/v1/users/updateMe';
+            url = type === 'password' ? 'http://localhost:8000/api/v1/users/updateMyPassword' : 'http://localhost:8000/api/v1/users/updateMe'; //console.log(url);
+
             _context.next = 4;
             return (0, _axios.default)({
               method: 'PATCH',
               url: url,
-              data: {
-                name: name,
-                email: email
-              }
+              data: data
             });
 
           case 4:
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              (0, _alert.showAlert)('success', "".concat(type.toUpperCase(), " updated succesfully!"));
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 500);
+              (0, _alert.showAlert)('success', "".concat(type.toUpperCase(), " updated succesfully!")); //   window.setTimeout(() => {
+              //     location.assign('/');
+              //   }, 500);
             }
 
             _context.next = 11;
@@ -8860,10 +8857,10 @@ if (userDataForm) {
               name = document.getElementById('name').value;
               email = document.getElementById('email').value;
               _context.next = 5;
-              return updateSettings({
+              return (0, _updateSettings.updateSettings)({
                 name: name,
                 email: email
-              }, type = 'data');
+              }, 'data');
 
             case 5:
             case "end":
@@ -8880,7 +8877,7 @@ if (userDataForm) {
 }
 
 if (userPasswordForm) {
-  userDataForm.addEventListener('submit',
+  userPasswordForm.addEventListener('submit',
   /*#__PURE__*/
   function () {
     var _ref2 = _asyncToGenerator(
@@ -8892,20 +8889,19 @@ if (userPasswordForm) {
           switch (_context2.prev = _context2.next) {
             case 0:
               e.preventDefault();
-              document.querySelector('.btn--save-password').value = 'Updating...';
+              document.querySelector('.btn--save-password').text = 'Updating...';
               passwordCurrent = document.getElementById('password-current').value;
               password = document.getElementById('password').value;
-              passwordConfirm = document.getElementById('password-confirm').value; //const email = document.getElementById('email').value;
-
+              passwordConfirm = document.getElementById('password-confirm').value;
               _context2.next = 7;
-              return updateSettings({
+              return (0, _updateSettings.updateSettings)({
                 passwordCurrent: passwordCurrent,
                 password: password,
                 passwordConfirm: passwordConfirm
-              }, type = 'password');
+              }, 'password');
 
             case 7:
-              document.querySelector('.btn--save-password').value = 'Save password';
+              document.querySelector('.btn--save-password').text = 'Save password';
               document.getElementById('password-current').value = '';
               document.getElementById('password').value = '';
               document.getElementById('password-confirm').value = '';
@@ -8951,7 +8947,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3620" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63427" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

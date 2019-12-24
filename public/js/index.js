@@ -3,7 +3,7 @@
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
-import { updatSettings } from './updateSettings';
+import { updateSettings } from './updateSettings';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -37,22 +37,22 @@ if (userDataForm) {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    await updateSettings({ name, email }, (type = 'data'));
+    await updateSettings({ name, email }, 'data');
   });
 }
 
 if (userPasswordForm) {
-  userDataForm.addEventListener('submit', async e => {
+  userPasswordForm.addEventListener('submit', async e => {
     e.preventDefault();
+
     document.querySelector('.btn--save-password').text = 'Updating...';
     const passwordCurrent = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('password-confirm').value;
 
-    //const email = document.getElementById('email').value;
     await updateSettings(
       { passwordCurrent, password, passwordConfirm },
-      (type = 'password')
+      'password'
     );
 
     document.querySelector('.btn--save-password').text = 'Save password';
