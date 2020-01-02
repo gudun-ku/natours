@@ -16,7 +16,7 @@ module.exports = class Email {
       return 1;
     }
 
-    return transporter = nodemailer.createTransport({
+    return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
       auth: {
@@ -30,7 +30,8 @@ module.exports = class Email {
   // send the actual email
   async send(template, subject) {
     // 1) Render HTML based on pug template
-    const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`,
+    const html = pug.renderFile(
+      `${__dirname}/../views/emails/${template}.pug`,
       {
         firstName: this.firstName,
         url: this.url,
@@ -49,10 +50,16 @@ module.exports = class Email {
 
     // 3) Create a transport and send the email
     await this.newTransport().sendMail(mailOptions);
-
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Natours Family!')
+    await this.send('welcome', 'Welcome to the Natours Family!');
+  }
+
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'your password reset token (valid for only 10 minutes)'
+    );
   }
 };
