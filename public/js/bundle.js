@@ -6601,15 +6601,40 @@ try {
 //console.log('Hello from the client side :D');
 
 /* eslint-disable */
-var locations = JSON.parse(document.getElementById('map').dataset.locations);
-console.log(locations);
+var locations = JSON.parse(document.getElementById('map').dataset.locations); //console.log(locations);
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3VkdW4ta3UiLCJhIjoiY2s0enlrbzVsMDl1OTNscW44bXMyN2I1YiJ9.u7yQCVVDUTxLiZJDhsc25g';
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/gudun-ku/ck4zyopdd4y311cqltt7cyov6' // center: [-118.998, 34.111],
+  style: 'mapbox://styles/gudun-ku/ck4zyopdd4y311cqltt7cyov6',
+  scrollZoom: false // center: [-118.998, 34.111],
   // zoom: 6,
   // interactive: false
 
+});
+var bounds = new mapboxgl.LngLatBounds();
+locations.forEach(function (loc) {
+  // Create marker
+  var el = document.createElement('div');
+  el.className = 'marker'; // Add marker
+
+  new mapboxgl.Marker({
+    element: el,
+    anchor: 'bottom'
+  }).setLngLat(loc.coordinates).addTo(map); // Add popup
+
+  new mapboxgl.Popup({
+    offset: 30
+  }).setLngLat(loc.coordinates).setHTML("<p>Day ".concat(loc.day, ": ").concat(loc.description, "</p>")).addTo(map);
+  bounds.extend(loc.coordinates);
+});
+map.fitBounds(bounds, {
+  padding: {
+    top: 200,
+    bottom: 150,
+    left: 100,
+    right: 100
+  }
 });
 },{}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
@@ -8821,9 +8846,8 @@ var logoutButton = document.querySelector('.nav__el--logout');
 var userDataForm = document.querySelector('.form-user-data');
 var userPasswordForm = document.querySelector('.form-user-password'); // DELEGATION
 
-if (mapBox) {
-  var locations = JSON.parse(mapBox.dataset.locations);
-  (0, _mapbox.displayMap)(locations);
+if (mapBox) {//const locations = JSON.parse(mapBox.dataset.locations);
+  //displayMap(locations);
 }
 
 if (loginForm) {
@@ -8945,7 +8969,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3097" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1336" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
