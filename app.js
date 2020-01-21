@@ -11,6 +11,8 @@ const xss = require('xss-clean');
 // prevent parameters pollution
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+// compress response
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -73,6 +75,8 @@ app.use(
     ]
   })
 );
+
+app.use(compression());
 
 // Test - using our own test middlewares
 app.use((req, res, next) => {
