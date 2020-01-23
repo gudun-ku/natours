@@ -25,6 +25,8 @@ const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
+// trust proxies (need in production mode on heroku)
+app.enable('trust proxy');
 
 // use PUG
 app.set('view engine', 'pug');
