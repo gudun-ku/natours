@@ -13,6 +13,8 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 // compress response
 const compression = require('compression');
+// for enabling cors
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -33,6 +35,20 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // GLOBAL MIDDLEWARES
+// Implement CORS for simple requests. Other require preflight face
+app.use(cors());
+// Access-Control-Allow-Origin *
+// api.natours.com, front-end natours.com
+/*
+app.use(cors({
+  origin: 'https://www.bell-natours.heroku.com'
+}));
+*/
+
+// CORS for put, patch, delete
+app.options('*', cors());
+//app.options('/api/v1/tours/:id', cors());
+
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
