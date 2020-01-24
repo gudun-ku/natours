@@ -9,7 +9,7 @@ const router = express.Router();
 router.get(
   '/',
   // workaround for testing with bookingController
-  bookingController.createBookingCheckout,
+  // bookingController.createBookingCheckout,
   authController.isLoggedIn,
   viewsController.getOvierview
 );
