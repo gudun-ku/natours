@@ -1,11 +1,13 @@
 const express = require('express');
 const viewsController = require('./../controllers/viewsController');
 const authController = require('./../controllers/authController');
-const bookingController = require('./../controllers/bookingController');
 
 const router = express.Router();
 
-//router.use(authController.isLoggedIn);
+// alerts
+router.use(viewsController.alerts);
+
+// router.use(authController.isLoggedIn);
 router.get(
   '/',
   // workaround for testing with bookingController
